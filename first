@@ -1,0 +1,47 @@
+#!/bin/bash
+
+
+echo "please input name of running script"
+read script_name
+echo "check status of " $script_name
+read -p "Press enter to continue"
+
+echo "list of running processes:"
+ps ax | grep $script_name
+echo
+echo
+
+echo "------------"
+SCRIPTPID=`ps ax | grep $script_name | awk 'NR==1 {print $1}'` 
+echo "running scripts PID= " $SCRIPTPID
+
+
+echo "------------"
+echo "status of busy file created by script:"
+ls -l /proc/$SCRIPTPID/fd
+echo "------------"
+read -p "Press enter to continue"
+
+echo
+echo
+echo "------------"
+echo "script " $script_name "open and write data to file:"  
+ls -l /proc/$SCRIPTPID/fd | awk -F" " '{print $11}' | awk 'END {print}'
+echo
+echo
+read -p "Press enter to continue"
+
+echo "running screens"
+screen -ls
+read -p "Press enter to continue"
+echo "please input name of right name of screen"
+read screen_name
+read -p "Press enter to continue"
+echo "close interrupted session and open new in current terminal"
+echo $screen_name
+
+screen -D $screen_name
+screen -ls
+read -p "Press enter to continue"
+screen -r $screen_name
+

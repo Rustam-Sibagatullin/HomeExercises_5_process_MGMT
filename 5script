@@ -1,0 +1,14 @@
+import os
+with open('scriplog', 'wb') as f:
+
+    a = input("please enter number")
+    i = 1
+    f.write(str(a))
+    while i <= a:
+        print("pause N ", i, " from total number ", a,  " please enter for continue")
+        raw_input()
+        f.write(str(i))
+        print(i)
+        i += 1
+        print("--------")
+
