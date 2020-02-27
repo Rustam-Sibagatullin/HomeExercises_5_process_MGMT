@@ -1,0 +1,54 @@
+#!/bin/bash
+
+echo
+echo "This script will kill all process running by spesific user over ssh connection"
+echo
+read -p "Press enter for continue"
+echo
+
+echo "users who are currently logged in:"
+who
+echo
+read -p "Press enter for continue"
+echo
+read -p "Please enter USER_NAME, all proceeses will be killed for this user: " USER_NAME
+echo
+echo "all network connection:" 
+echo
+sudo lsof -i
+echo
+read -p "Press enter for continue"
+echo
+echo "All running processes opened by " $USER_NAME
+echo
+read -p "Press enter for continue"
+sudo lsof -u $USER_NAME | more
+read -p "Press enter for continue"
+echo
+
+while true
+do
+read -p "Would you like to kill all processes for user? Enter Y(yes) or N(no): " answer
+
+if [[ "$answer" == "Y" ]]; then
+    sudo kill -9 `sudo lsof -t -u user2`
+    echo "$USER_NAME processes were killed" 
+    break
+elif [[ "$answer" == "N" ]]; then
+    echo "Selected N, USERs proceses will be continie"
+    break    
+else
+    echo
+    echo -e "\e[1;31mPlease select correct answer Y(yes) or N(no)\e[0m"
+    echo
+fi
+done
+echo
+echo "script finished"
+
+
+
+
+
+
+
